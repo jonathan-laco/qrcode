@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/75595426?v=4" type="image/x-icon" />
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="container mx-auto flex flex-col lg:flex-row bg-white rounded-lg shadow-lg overflow-hidden max-w-full lg:max-w-5xl">
+
+        <div class="w-full lg:w-1/2 p-6 lg:p-8 bg-gray-100">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Personalize seu QR Code</h2>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">URL:</label>
+                <input id="urlInput" type="text" placeholder="https://seusite.com" maxlength="255" class="w-full p-2 border rounded focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">Cor do QR Code (Escolha):</label>
+                <input id="colorPicker" type="color" class="w-full h-10">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">Tamanho (px): <span id="sizeLabel">200x200</span></label>
+                <input id="sizeSlider" type="range" min="100" max="600" value="200" class="w-full">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">Formato dos Pontos:</label>
+                <select id="shapeSelect" class="w-full p-2 border rounded focus:outline-none focus:border-indigo-500">
+                    <option value="square">Quadrado</option>
+                    <option value="dot">Pontos</option>
+                    <option value="rounded">Arredondado</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">Estilo dos Olhos:</label>
+                <select id="eyeStyleSelect" class="w-full p-2 border rounded focus:outline-none focus:border-indigo-500">
+                    <option value="square">Quadrado</option>
+                    <option value="circle">Círculo</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">Inserir Logotipo (Opcional):</label>
+                <input id="logoInput" type="file" accept="image/*" class="w-full p-2 border rounded focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <button id="generateBtn" class="bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-600 w-full">O QR Code é Atualizado em Tempo Real</button>
+        </div>
+
+        <div class="w-full lg:w-1/2 p-6 lg:p-8 flex flex-col items-center bg-white">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Seu QR Code</h2>
+
+            <div id="qrcode-container" class="w-full h-96"> 
+                <div id="qrcode" class="p-4 border rounded-lg bg-gray-50"></div>
+            </div>
+
+            <div class="mt-6 w-full">
+                <label class="block text-gray-700 font-semibold mb-2">Escolha o formato:</label>
+                <select id="downloadFormat" class="w-full p-2 border rounded mb-4">
+                    <option value="png">PNG (Sem Fundo)</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="svg">SVG</option>
+                    <option value="webp">WEBP</option>
+                </select>
+                <button id="downloadBtn" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 w-full">Baixar QR Code</button>
+                <div class="flex justify-center mt-6 space-x-4">
+                    <a href="https://github.com/jonathan-laco" target="_blank" class="flex items-center text-gray-800 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.867 8.167 6.841 9.485.5.092.682-.217.682-.485v-1.777c-2.768.603-3.357-1.334-3.357-1.334-.452-1.144-1.104-1.45-1.104-1.45-.906-.622.069-.608.069-.608 1.002.07 1.527 1.03 1.527 1.03.892 1.55 2.338 1.106 2.91.848.092-.648.348-1.106.636-1.361-2.219-.252-4.558-1.109-4.558-4.946 0-1.094.39-1.989 1.031-2.688-.103-.252-.448-1.275.097-2.654 0 0 .84-.268 2.75 1.027.799-.222 1.661-.333 2.516-.338.855.005 1.717.116 2.516.338 1.91-1.295 2.75-1.027 2.75-1.027.547 1.379.201 2.402.097 2.654.641.699 1.031 1.594 1.031 2.688 0 3.84-2.341 4.693-4.567 4.94.359.308.679.918.679 1.847v2.734c0 .268.183.577.685.485A8.008 8.008 0 0022 12C22 6.477 17.523 2 12 2z"/>
+                        </svg>
+                        <span class="ml-2">Meu GitHub</span>
+                    </a>
+                    <a href="https://jonathan-laco.github.io/" target="_blank" class="flex items-center text-gray-800 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.867 8.167 6.841 9.485.5.092.682-.217.682-.485v-1.777c-2.768.603-3.357-1.334-3.357-1.334-.452-1.144-1.104-1.45-1.104-1.45-.906-.622.069-.608.069-.608 1.002.07 1.527 1.03 1.527 1.03.892 1.55 2.338 1.106 2.91.848.092-.648.348-1.106.636-1.361-2.219-.252-4.558-1.109-4.558-4.946 0-1.094.39-1.989 1.031-2.688-.103-.252-.448-1.275.097-2.654 0 0 .84-.268 2.75 1.027.799-.222 1.661-.333 2.516-.338.855.005 1.717.116 2.516.338 1.91-1.295 2.75-1.027 2.75-1.027.547 1.379.201 2.402.097 2.654.641.699 1.031 1.594 1.031 2.688 0 3.84-2.341 4.693-4.567 4.94.359.308.679.918.679 1.847v2.734c0 .268.183.577.685.485A8.008 8.008 0 0022 12C22 6.477 17.523 2 12 2z"/>
+                        </svg>
+                        <span class="ml-2">Meu Portfólio</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/script.js"></script>
+</body>
+</html>
